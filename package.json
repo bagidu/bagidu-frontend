@@ -13,10 +13,12 @@
     "test": "jest"
   },
   "dependencies": {
-    "nuxt": "^2.0.0",
-    "@nuxtjs/axios": "^5.3.6"
+    "@chenfengyuan/vue-qrcode": "^1.0.2",
+    "@nuxtjs/axios": "^5.3.6",
+    "nuxt": "^2.0.0"
   },
   "devDependencies": {
+    "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/eslint-config": "^2.0.0",
     "@nuxtjs/eslint-module": "^1.0.0",
     "@nuxtjs/stylelint-module": "^3.1.0",
