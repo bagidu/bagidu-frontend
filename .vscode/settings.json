@@ -1,3 +1,9 @@
 {
-    "eslint.enable": true
+  "eslint.enable": true,
+  "eslint.format.enable": true,
+  "vetur.format.enable": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+  },
+  "eslint.alwaysShowStatus": true
 }

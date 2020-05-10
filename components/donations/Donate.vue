@@ -108,7 +108,12 @@ export default {
       }).then((res) => {
         if (res.status === 201) {
           const data = res.data
-          this.$router.push(`/pay/${data.id}`)
+          if (data.id) {
+            this.$router.push(`/pay/${data.id}`)
+            this.$store.commit('donation/append', data)
+          } else {
+            console.err('server not respond with id')
+          }
         }
       }).catch((err) => {
         console.log('error when make donation', err)

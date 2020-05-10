@@ -27,15 +27,26 @@ export default {
   },
   data () {
     return {
-      qrURL: null
+      qrURL: null,
+      donation: null
+    }
+  },
+  computed: {
+    donation_store () {
+      return this.$store.state.donation.donations.find(f => f.id === this.$route.params.id)
     }
   },
   mounted () {
-    this.getQrBlobURL()
+    if (this.donation_store) {
+      this.donation = this.donation_store
+      this.generateQR(this.donation.qr)
+    } else {
+      // TODO: Fetch data by id
+      this.generateQR('hello world')
+    }
   },
   methods: {
-    async getQrBlobURL () {
-      const data = '00020101021226690017COM.TELKOMSEL.WWW011893600911002414220002152003260414220010303UME51450015ID.OR.GPNQR.WWW02150000000000000000303UME520454995802ID5920Placeholder merchant6007Jakarta610612345662380115Wxs7urG4Yczndkl0715Wxs7urG4Yczndkl5303360540415006304FBC9'
+    async generateQR (data) {
       const url = await QR.toDataURL(data, { width: 300, height: 300 })
 
       const byteString = atob(url.split(',')[1])
@@ -48,7 +59,6 @@ export default {
       const blob = new Blob([ab], { type: 'image/jpeg' })
       const blbobURL = URL.createObjectURL(blob)
       this.qrURL = blbobURL
-      console.log('blob url', blbobURL)
     }
   }
 }
