@@ -27,7 +27,7 @@
     "@vue/test-utils": "1.0.2",
     "babel-eslint": "10.1.0",
     "babel-jest": "24.9.0",
-    "eslint": "6.8.0",
+    "eslint": "7.0.0",
     "eslint-plugin-nuxt": "0.5.2",
     "jest": "24.9.0",
     "stylelint": "13.3.3",
