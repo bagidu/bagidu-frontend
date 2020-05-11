@@ -20,7 +20,7 @@
   "devDependencies": {
     "@nuxtjs/dotenv": "1.4.1",
     "@nuxtjs/eslint-config": "2.0.2",
-    "@nuxtjs/eslint-module": "1.2.0",
+    "@nuxtjs/eslint-module": "2.0.0",
     "@nuxtjs/stylelint-module": "3.2.2",
     "@nuxtjs/tailwindcss": "1.4.1",
     "@vue/eslint-config-standard": "5.1.2",
