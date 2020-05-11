@@ -1,9 +1,8 @@
 {
-  "builds": [
+  "rewrites": [
     {
-      "src": "nuxt.config.js",
-      "use": "@nuxtjs/now-builder",
-      "config": {}
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
