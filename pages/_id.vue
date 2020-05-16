@@ -13,7 +13,7 @@
           </div>
           <input
             id="amount"
-            v-model="amount"
+            v-model.number="amount"
             type="number"
             name="amount"
             class="flex-grow w-full rounded-r outline-none  text-3xl font-bold"
@@ -98,20 +98,11 @@ export default {
       return this.$route.params.id
     }
   },
-  mounted () {
-    // this.$api.get(`/user/${this.username}`)
-    //   .then((resp) => {
-    //     console.log('response', resp.data)
-    //   })
-    //   .catch((err) => {
-    //     console.log('error fetch user', err)
-    //   })
-  },
   methods: {
     onProcessDonate () {
       this.$api.post(`/donation/${this.username}`, {
         name: this.name,
-        amount: this.amount,
+        amount: parseInt(this.amount),
         message: this.message
       }).then((res) => {
         if (res.status === 201) {
