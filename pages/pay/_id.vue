@@ -27,22 +27,24 @@ export default {
   },
   data () {
     return {
-      qrURL: null,
-      donation: null
+      qrURL: null
     }
   },
   computed: {
-    donation_store () {
-      return this.$store.state.donation.donations.find(f => f.id === this.$route.params.id)
+    donation () {
+      return this.$store.state.donation.data
+    }
+  },
+  watch: {
+    donation (val) {
+      if (val) {
+        this.generateQR(val.qr)
+      }
     }
   },
   mounted () {
-    if (this.donation_store) {
-      this.donation = this.donation_store
+    if (this.donation) {
       this.generateQR(this.donation.qr)
-    } else {
-      // TODO: Fetch data by id
-      this.generateQR('hello world')
     }
   },
   methods: {
@@ -60,6 +62,11 @@ export default {
       const blbobURL = URL.createObjectURL(blob)
       this.qrURL = blbobURL
     }
+  },
+  async validate ({ params, app, store }) {
+    const resp = await app.$api.get(`/donation/${params.id}`)
+    store.commit('donation/set', resp.data)
+    return resp.status === 200
   }
 }
 </script>

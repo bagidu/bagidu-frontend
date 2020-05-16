@@ -1,10 +1,10 @@
 export const state = () => ({
-  donations: []
+  data: null
 })
 
 export const mutations = {
-  append (state, donation) {
-    state.donations = [...state.donations, donation]
+  set (state, donation) {
+    state.data = donation
   }
 }
 
