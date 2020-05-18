@@ -1,6 +1,5 @@
-# bagidu-frontend
+# Bagidu ID Frontend
 
-> My ace Nuxt.js project
 
 ## Build Setup
 
