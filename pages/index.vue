@@ -21,7 +21,7 @@
     <div id="hero" class="w-10/12 m-auto h-full">
       <div id="hero-container" class="flex">
         <div id="left" class="flex-1 flex items-start justify-start mt-32 flex-col">
-          <h2 class="text-4xl font-semibold">
+          <h2 class="text-4xl font-bold">
             Platform Dukungan Kreator
           </h2>
           <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore veritatis laboriosam sint enim nisi hic laudantium facere sapiente magnam. Molestias officia eum omnis voluptates obcaecati dolorum aut laudantium, quaerat deleniti.</p>
