@@ -21,6 +21,8 @@
 /* eslint-disable no-console */
 // import QRCode from '@chenfengyuan/vue-qrcode'
 import QR from 'qrcode/build/qrcode'
+
+let checkInterval = null
 export default {
   components: {
     // QRCode
@@ -49,6 +51,12 @@ export default {
       this.generateQR(this.donation.qr)
     }
   },
+  beforeDestroy () {
+    if (checkInterval) {
+      console.log('clear interval on unmount')
+      clearInterval(checkInterval)
+    }
+  },
   methods: {
     async generateQR (data) {
       const url = await QR.toDataURL(data, { width: 300, height: 300 })
@@ -67,6 +75,19 @@ export default {
     checkPaymentStatus () {
       if (this.donation.status === 'SUCCESS') {
         this.$router.replace(`/pay/${this.$route.params.id}/success`)
+      } else {
+        if (checkInterval) {
+          // console.log('already checking...')
+          return false
+        }
+        checkInterval = setInterval(async () => {
+          try {
+            const resp = await this.$api.get(`/donation/${this.$route.params.id}`)
+            this.$store.commit('donation/set', resp.data)
+          } catch {
+            console.log('error get payment status')
+          }
+        }, 5000)
       }
     }
   },

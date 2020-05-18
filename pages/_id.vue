@@ -7,7 +7,13 @@
       </div>
       <!-- Amount -->
       <div id="amount" class="px-4 pb-4">
-        <div class="flex flex-row border border-green-400 rounded items-center bg-white text-gray-700">
+        <div
+          class="flex flex-row border rounded items-center bg-white text-gray-700"
+          :class="{
+            'border-red-500':form_errors.filter(f=>f.field==='amount').length >0,
+            'border-green-400':form_errors.filter(f=>f.field==='amount').length <=0
+          }"
+        >
           <div class="bg-white rounded-l px-2  font-bold text-3xl">
             Rp.
           </div>
@@ -16,8 +22,18 @@
             v-model.number="amount"
             type="number"
             name="amount"
+            min="1500"
+            max="2000000"
             class="flex-grow w-full rounded-r outline-none  text-3xl font-bold"
           >
+        </div>
+        <!-- Amount Validation Error -->
+        <div
+          v-for="(error,i) in form_errors.filter(f => f.field ==='amount')"
+          :key="i"
+          class="validation text-xs text-red-600 mt-1"
+        >
+          {{ error.message }}
         </div>
         <div id="amount-preset" class="flex flex-row mt-4">
           <div
@@ -42,6 +58,14 @@
           type="text"
           class="flex-grow rounded border border-green-400 px-3 py-1 w-full outline-none  text-lg font-normal"
         >
+        <!-- Name Validation Error -->
+        <div
+          v-for="(error,i) in form_errors.filter(f => f.field ==='name')"
+          :key="i"
+          class="validation text-xs text-red-600 mt-1"
+        >
+          {{ error.message }}
+        </div>
       </div>
       <!-- Message -->
       <div id="message" class="px-4 pb-4">
@@ -92,6 +116,7 @@ export default {
           value: 100000
         }
       ],
+      form_errors: [],
       loading: false
     }
   },
@@ -100,10 +125,40 @@ export default {
       return this.$route.params.id
     }
   },
+  watch: {
+    amount () {
+      this.onValidateForm()
+    },
+    name () {
+      this.onValidateForm()
+    }
+  },
   methods: {
+    onValidateForm () {
+      // Reset
+      this.form_errors = []
+
+      // Validate Form
+      if (!this.name) {
+        this.form_errors.push({ field: 'name', message: 'Jangan lupa tulis nama kamu ya' })
+      }
+
+      if (this.amount < 1500) {
+        this.form_errors.push({ field: 'amount', message: 'Minimal donasi 1500 gan!' })
+      }
+
+      if (this.amount > 2000000) {
+        this.form_errors.push({ field: 'amount', message: 'Maksimal sekali donasi 2jt' })
+      }
+    },
     onProcessDonate () {
       if (this.loading) {
         // Stop On Loading
+        return false
+      }
+
+      this.onValidateForm()
+      if (this.form_errors.length > 0) {
         return false
       }
 
