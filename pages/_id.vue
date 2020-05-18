@@ -55,10 +55,11 @@
       <!-- Button -->
       <div id="button-container" class="px-4">
         <button
-          class="rounded bg-green-400 text-white text-xl font-extrabold w-full py-3 mb-4 focus:outline-none"
+          :disabled="loading"
+          class="rounded bg-green-400 text-white text-xl font-extrabold w-full py-3 mb-4 focus:outline-none disabled:bg-opacity-50 disabled:cursor-wait"
           @click="onProcessDonate"
         >
-          Donasi
+          {{ loading ? 'Processing...':'Donasi' }}
         </button>
       </div>
     </div>
@@ -90,7 +91,8 @@ export default {
           name: '100K',
           value: 100000
         }
-      ]
+      ],
+      loading: false
     }
   },
   computed: {
@@ -100,6 +102,12 @@ export default {
   },
   methods: {
     onProcessDonate () {
+      if (this.loading) {
+        // Stop On Loading
+        return false
+      }
+
+      this.loading = true
       this.$api.post(`/donation/${this.username}`, {
         name: this.name,
         amount: parseInt(this.amount),
@@ -114,17 +122,25 @@ export default {
             console.err('server not respond with id')
           }
         }
-      }).catch((err) => {
-        console.log('error when make donation', err)
       })
+        .catch((err) => {
+          console.log('error when make donation', err)
+        })
+        .finally(() => {
+          this.loading = false
+        })
     },
     onSetAmount (amount) {
       this.amount = amount
     }
   },
   async validate ({ params, app }) {
-    const resp = await app.$api.get(`/user/${params.id}`)
-    return resp.status === 200
+    try {
+      const resp = await app.$api.get(`/user/${params.id}`)
+      return resp.status === 200
+    } catch {
+      return false
+    }
   }
 }
 </script>

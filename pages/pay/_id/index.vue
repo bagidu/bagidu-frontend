@@ -38,12 +38,14 @@ export default {
   watch: {
     donation (val) {
       if (val) {
+        this.checkPaymentStatus()
         this.generateQR(val.qr)
       }
     }
   },
   mounted () {
     if (this.donation) {
+      this.checkPaymentStatus()
       this.generateQR(this.donation.qr)
     }
   },
@@ -61,6 +63,11 @@ export default {
       const blob = new Blob([ab], { type: 'image/jpeg' })
       const blbobURL = URL.createObjectURL(blob)
       this.qrURL = blbobURL
+    },
+    checkPaymentStatus () {
+      if (this.donation.status === 'SUCCESS') {
+        this.$router.replace(`/pay/${this.$route.params.id}/success`)
+      }
     }
   },
   async validate ({ params, app, store }) {
