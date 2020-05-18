@@ -141,6 +141,18 @@ export default {
     } catch {
       return false
     }
+  },
+  head () {
+    return {
+      title: `Donasi ke ${this.username} | Bagidu ID`,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: `Ayo dukung ${this.username} di Bagidu ID platform donasi untuk creator.`
+        }
+      ]
+    }
   }
 }
 </script>

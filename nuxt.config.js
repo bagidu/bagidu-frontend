@@ -1,11 +1,11 @@
 
 export default {
-  mode: 'spa',
+  mode: 'ssr',
   /*
   ** Headers of the page
   */
   head: {
-    title: 'Bagidu',
+    title: 'Bagidu ID',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
