@@ -1,23 +1,5 @@
 <template>
   <div id="index" class="h-screen">
-    <header class="py-6">
-      <div class="w-10/12 m-auto flex items-center">
-        <div id="title" class="text-xl font-semibold text-gray-800">
-          <nuxt-link to="/">
-            Bagidu <span class="text-green-500">ID</span>
-          </nuxt-link>
-        </div>
-        <div class="spacer flex-grow" />
-        <div id="navbar-links">
-          <nuxt-link to="/login" class="px-4 py-2 text-gray-800 uppercase text-sm font-semibold">
-            Login
-          </nuxt-link>
-          <nuxt-link to="/signup" class="px-4 py-2 rounded border border-green-500 bg-green-500 text-white uppercase text-sm">
-            Daftar
-          </nuxt-link>
-        </div>
-      </div>
-    </header>
     <div id="hero" class="w-10/12 m-auto h-full">
       <div id="hero-container" class="flex">
         <div id="left" class="flex-1 flex items-start justify-start mt-32 flex-col">
@@ -46,6 +28,7 @@
 <script>
 import LandingSVG from '~/components/LandingSVG'
 export default {
+  layout: 'public',
   components: {
     LandingSVG
   }
