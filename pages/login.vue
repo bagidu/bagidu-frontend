@@ -23,6 +23,7 @@
           type="password"
           placeholder="Password"
           class="w-full rounded px-3 py-2 border border-gray-400 focus:border-green-500 outline-none"
+          @keydown.enter="onLogin"
         >
       </div>
       <div id="button-group" class="mt-4">
@@ -60,10 +61,15 @@ export default {
       this.error = null
 
       // Send Request
-      this.$api.post('/auth/login', {
-        username: this.username,
-        password: this.password
-      })
+      this.$api.post('/auth/login',
+        {
+          username: this.username,
+          password: this.password
+        },
+        {
+          withCredentials: true
+        }
+      )
         .then((resp) => {
           console.log('login success', resp.data)
         })
@@ -71,6 +77,11 @@ export default {
           this.error = err.message
           console.log('login error', err)
         })
+    }
+  },
+  head () {
+    return {
+      title: 'Login | Bagidu ID'
     }
   }
 }
