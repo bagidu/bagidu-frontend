@@ -30,7 +30,7 @@
     "eslint": "7.0.0",
     "eslint-plugin-nuxt": "1.0.0",
     "jest": "26.0.1",
-    "stylelint": "13.4.1",
+    "stylelint": "13.5.0",
     "vue-jest": "4.0.0-beta.2"
   }
 }
