@@ -108,6 +108,10 @@ export default {
           value: 10000
         },
         {
+          name: '20K',
+          value: 20000
+        },
+        {
           name: '50K',
           value: 50000
         },
