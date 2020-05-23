@@ -59,24 +59,7 @@ export default {
     onLogin () {
       // Reset
       this.error = null
-
-      // Send Request
-      this.$api.post('/auth/login',
-        {
-          username: this.username,
-          password: this.password
-        },
-        {
-          withCredentials: true
-        }
-      )
-        .then((resp) => {
-          console.log('login success', resp.data)
-        })
-        .catch((err) => {
-          this.error = err.message
-          console.log('login error', err)
-        })
+      this.$store.dispatch('user/login', { username: this.username, password: this.password })
     }
   },
   head () {
