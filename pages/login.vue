@@ -47,12 +47,33 @@
 <script>
 /* eslint-disable no-console */
 export default {
+  middleware: 'guest',
   layout: 'public',
   data () {
     return {
       username: '',
       password: '',
       error: null
+    }
+  },
+  computed: {
+    token () {
+      return this.$store.state.user.token
+    }
+  },
+  watch: {
+    token (token) {
+      if (token) {
+        this.$router.replace('/dashboard')
+      }
+    }
+  },
+  mounted () {
+    const user = this.$store.state.user
+    if (user && user.token && !user.profile) {
+      this.$store.dispatch('user/getUser')
+    } else if (user && !user.token) {
+      this.$store.dispatch('user/getToken')
     }
   },
   methods: {

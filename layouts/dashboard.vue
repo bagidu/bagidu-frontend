@@ -1,6 +1,6 @@
 <template>
   <div id="#dashboard">
-    <HeaderDashboard />
+    <header-dashboard />
     <div id="content" class="w-10/12 m-auto">
       <nuxt-child />
     </div>

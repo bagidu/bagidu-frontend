@@ -2,7 +2,8 @@
 export const state = () => ({
   profile: null,
   token: null,
-  token_expired: null
+  token_expired: null,
+  loading: true
 })
 
 export const mutations = {
@@ -23,12 +24,16 @@ export const actions = {
     this.$api.setToken(token, 'Bearer')
   },
   async getToken ({ dispatch }) {
-    const data = await this.$api.$post('/auth/token', null, {
-      withCredentials: true
-    })
-    console.log('getToken:data', data)
-    dispatch('setToken', { token: data.access_token, expired: data.expired })
-    dispatch('getUser')
+    try {
+      const data = await this.$api.$post('/auth/token', null, {
+        withCredentials: true
+      })
+      console.log('getToken:data', data)
+      dispatch('setToken', { token: data.access_token, expired: data.expired })
+      dispatch('getUser')
+    } catch (e) {
+      // console.log('error get token', e)
+    }
   },
   getUser ({ commit }) {
     this.$api.get('/user/me')
