@@ -13,12 +13,21 @@ export default {
   components: {
     HeaderDashboard
   },
+  computed: {
+    user () {
+      return this.$store.state.user
+    }
+  },
   mounted () {
     this.getUser()
   },
   methods: {
     getUser () {
-      this.$store.dispatch('user/getUser')
+      if (this.user && this.user.token && !this.user.profile) {
+        this.$store.dispatch('user/getUser')
+      } else if (this.user && !this.user.token) {
+        this.$store.dispatch('user/getToken')
+      }
     }
   }
 }
