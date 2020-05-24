@@ -2,7 +2,10 @@
   <div id="#dashboard">
     <header-dashboard />
     <div id="content" class="w-10/12 m-auto">
-      <nuxt-child />
+      <nuxt-child v-if="user" />
+      <div v-else id="dashboard-loading">
+        Loading...
+      </div>
     </div>
   </div>
 </template>
