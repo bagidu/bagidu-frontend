@@ -1,8 +1,11 @@
 <template>
   <div id="#dashboard">
-    <HeaderDashboard />
+    <header-dashboard />
     <div id="content" class="w-10/12 m-auto">
-      <nuxt-child />
+      <nuxt-child v-if="user.profile" />
+      <div v-else id="dashboard-loading">
+        Loading...
+      </div>
     </div>
   </div>
 </template>
@@ -13,12 +16,21 @@ export default {
   components: {
     HeaderDashboard
   },
+  computed: {
+    user () {
+      return this.$store.state.user
+    }
+  },
   mounted () {
     this.getUser()
   },
   methods: {
     getUser () {
-      this.$store.dispatch('user/getUser')
+      if (this.user && this.user.token && !this.user.profile) {
+        this.$store.dispatch('user/getUser')
+      } else if (this.user && !this.user.token) {
+        this.$store.dispatch('user/getToken')
+      }
     }
   }
 }
