@@ -14,17 +14,29 @@
         <nuxt-link to="/guide" class="text-gray-600 text-sm">
           Panduan
         </nuxt-link>
-        <nuxt-link v-if="user" to="/login" class="pl-4 py-2 text-gray-700 capitalize text-sm font-semibold">
+        <nuxt-link v-if="user" to="/dashboard" class="pl-4 py-2 text-gray-700 capitalize text-sm font-semibold">
           {{ user.name }}
         </nuxt-link>
       </div>
     </div>
-    <div id="top-menu" class="w-10/12 m-auto py-3">
-      <nuxt-link to="/dashboard" class="px py-3 text-green-500 uppercase text-xs font-bold border-b-4 border-green-500">
+    <div id="top-menu" class="w-10/12 m-auto py-3 text-gray-700">
+      <nuxt-link
+        to="/dashboard"
+        class="px py-3 uppercase text-xs font-bold"
+        :class="{
+          'border-b-4 border-green-500 text-green-500':$route.path==='/dashboard'
+        }"
+      >
         Dashboard
       </nuxt-link>
-      <nuxt-link to="/dashboard" class="px py-4 text-gray-800 uppercase text-xs font-bold ml-4 cursor-not-allowed">
-        Streaming Widget
+      <nuxt-link
+        to="/dashboard/streaming"
+        class="px py-3 uppercase text-xs font-bold ml-4"
+        :class="{
+          'border-b-4 border-green-500 text-green-500':$route.path==='/dashboard/streaming'
+        }"
+      >
+        Streaming
       </nuxt-link>
     </div>
   </header>
