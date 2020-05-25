@@ -65,6 +65,13 @@ export default {
     ** You can extend webpack config here
     */
     extend (config, ctx) {
+    },
+    terser: {
+      terserOptions: {
+        compress: {
+          drop_console: true
+        }
+      }
     }
   }
 }
