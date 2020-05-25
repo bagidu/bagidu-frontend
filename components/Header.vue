@@ -8,6 +8,12 @@
       </div>
       <div class="spacer flex-grow" />
       <div id="navbar-links">
+        <nuxt-link to="/guide" class="text-gray-600 mr-2 border border-gray-400 rounded px-3 py-1 text-sm">
+          Feedback
+        </nuxt-link>
+        <nuxt-link to="/guide" class="text-gray-600 text-sm">
+          Panduan
+        </nuxt-link>
         <nuxt-link v-if="user" to="/login" class="px-4 py-2 text-gray-800 uppercase text-sm font-semibold">
           {{ user.email }}
         </nuxt-link>
