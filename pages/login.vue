@@ -7,6 +7,13 @@
       <div v-if="error" id="error-message" class="text-sm text-red-400">
         {{ error }}
       </div>
+      <div v-if="errors.length > 0" id="error-message" class="text-sm text-red-400 rounded border border-red-400 p-2 mb-2">
+        <ul>
+          <li v-for="(err,i) in errors" :key="i" class="list-disc list-inside">
+            {{ err }}
+          </li>
+        </ul>
+      </div>
       <div id="username-group">
         <label for="text" class="text-sm">Username</label>
         <input
@@ -31,7 +38,7 @@
           class="px-3 py-2 bg-green-400 text-white font-semibold rounded w-full focus:outline-none"
           @click="onLogin"
         >
-          Login
+          Masuk
         </button>
         <p class="text-sm py-3">
           Belum punya akun?
@@ -59,6 +66,9 @@ export default {
   computed: {
     token () {
       return this.$store.state.user.token
+    },
+    errors () {
+      return this.$store.state.user.errors
     }
   },
   watch: {

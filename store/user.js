@@ -3,7 +3,8 @@ export const state = () => ({
   profile: null,
   token: null,
   token_expired: null,
-  loading: true
+  loading: true,
+  errors: []
 })
 
 export const mutations = {
@@ -13,6 +14,9 @@ export const mutations = {
   setToken (state, { token, expired }) {
     state.token = token
     state.token_expired = expired
+  },
+  setErrors (state, errors) {
+    state.errors = errors
   }
 }
 
@@ -45,7 +49,8 @@ export const actions = {
         console.log('error get user', err)
       })
   },
-  login ({ dispatch }, { username, password }) {
+  login ({ dispatch, commit }, { username, password }) {
+    commit('setErrors', [])
     // Send Request
     this.$api.post('/auth/login',
       {
@@ -65,6 +70,22 @@ export const actions = {
       .catch((err) => {
         // this.error = err.message
         console.log('login error', err)
+        commit('setErrors', [err.message])
+      })
+  },
+  signup ({ dispatch, commit }, data) {
+    commit('setErrors', [])
+    this.$api.$post('/user', data)
+      .then((res) => {
+        commit('setProfile', res)
+        dispatch('setToken', { token: res.access_token, expired: res.expired })
+        this.$router.replace('/dashboard')
+      })
+      .catch((e) => {
+        console.log('error signup', e.response)
+        if (e.response && e.response.data) {
+          commit('setErrors', e.response.data.message)
+        }
       })
   }
 }
