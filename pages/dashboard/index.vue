@@ -30,7 +30,7 @@
               </div>
             </div>
           </div>
-          <div id="feed-empty" class="p-8 text-center rounded border border-gray-300 text-sm text-gray-600">
+          <div v-else id="feed-empty" class="p-8 text-center rounded border border-gray-300 text-sm text-gray-600">
             Belum ada dukungan yang masuk
           </div>
         </div>
