@@ -2,7 +2,7 @@
   <div id="login" class="w-10/12 m-auto flex justify-center">
     <div class="w-1/3 mt-20">
       <h2 class="text-2xl py-4 font-normal">
-        Login to <span class="font-semibold text-gray-700">Bagidu</span> <span class="font-semibold text-green-500">ID</span>
+        Masuk ke <span class="font-semibold text-gray-700">Bagidu</span> <span class="font-semibold text-green-500">ID</span>
       </h2>
       <div v-if="error" id="error-message" class="text-sm text-red-400">
         {{ error }}
@@ -42,9 +42,9 @@
         </button>
         <p class="text-sm py-3">
           Belum punya akun?
-          <nuxt-link to="/signup" class="text-green-500">
+          <nuxt-link to="/register" class="text-green-500">
             Daftar disini
-          </nuxt-link>.
+          </nuxt-link>
         </p>
       </div>
     </div>

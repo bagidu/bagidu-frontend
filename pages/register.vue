@@ -1,6 +1,9 @@
 <template>
   <div id="register" class="w-10/12 m-auto flex justify-center">
-    <div class="w-1/3 mt-20">
+    <div class="w-1/3 mt-6">
+      <h2 class="text-2xl py-4 font-normal">
+        Mendaftar Akun <span class="font-semibold text-gray-700">Bagidu</span> <span class="font-semibold text-green-500">ID</span>
+      </h2>
       <div v-if="errors.length > 0" id="error-message" class="text-sm text-red-400 rounded border border-red-400 p-2 mb-2">
         <ul>
           <li v-for="(error,i) in errors" :key="i" class="list-disc list-inside">
@@ -54,7 +57,7 @@
             Sudah punya akun?
             <nuxt-link to="/login" class="text-green-500">
               Masuk
-            </nuxt-link>.
+            </nuxt-link>
           </p>
         </div>
       </div>
