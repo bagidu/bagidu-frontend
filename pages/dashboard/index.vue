@@ -6,7 +6,7 @@
           <h3 class="text-xl font-semibold mb-3">
             Dukungan
           </h3>
-          <div id="feed-list">
+          <div v-if="transactions.length > 0" id="feed-list">
             <div v-for="item in transactions" :key="item.id" class="feed-item rounded border border-gray-300 px-3 pb-3 mb-4">
               <div class="title flex px-2 pt-3 items-center">
                 <h4 class="font-semibold">
@@ -29,6 +29,9 @@
                 {{ item.message ? item.message :'No Message' }}
               </div>
             </div>
+          </div>
+          <div v-else id="feed-empty" class="p-8 text-center rounded border border-gray-300 text-sm text-gray-600">
+            Belum ada dukungan yang masuk
           </div>
         </div>
         <div id="overview" class="w-5/12 ml-2">

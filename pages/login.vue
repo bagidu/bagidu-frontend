@@ -2,10 +2,17 @@
   <div id="login" class="w-10/12 m-auto flex justify-center">
     <div class="w-1/3 mt-20">
       <h2 class="text-2xl py-4 font-normal">
-        Login to <span class="font-semibold text-gray-700">Bagidu</span> <span class="font-semibold text-green-500">ID</span>
+        Masuk ke <span class="font-semibold text-gray-700">Bagidu</span> <span class="font-semibold text-green-500">ID</span>
       </h2>
       <div v-if="error" id="error-message" class="text-sm text-red-400">
         {{ error }}
+      </div>
+      <div v-if="errors.length > 0" id="error-message" class="text-sm text-red-400 rounded border border-red-400 p-2 mb-2">
+        <ul>
+          <li v-for="(err,i) in errors" :key="i" class="list-disc list-inside">
+            {{ err }}
+          </li>
+        </ul>
       </div>
       <div id="username-group">
         <label for="text" class="text-sm">Username</label>
@@ -31,13 +38,13 @@
           class="px-3 py-2 bg-green-400 text-white font-semibold rounded w-full focus:outline-none"
           @click="onLogin"
         >
-          Login
+          Masuk
         </button>
         <p class="text-sm py-3">
           Belum punya akun?
-          <nuxt-link to="/signup" class="text-green-500">
+          <nuxt-link to="/register" class="text-green-500">
             Daftar disini
-          </nuxt-link>.
+          </nuxt-link>
         </p>
       </div>
     </div>
@@ -59,6 +66,9 @@ export default {
   computed: {
     token () {
       return this.$store.state.user.token
+    },
+    errors () {
+      return this.$store.state.user.errors
     }
   },
   watch: {
