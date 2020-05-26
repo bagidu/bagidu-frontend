@@ -6,7 +6,10 @@
           <h3 class="text-xl font-semibold mb-3">
             Dukungan
           </h3>
-          <div v-if="transactions.length > 0" id="feed-list">
+          <div v-if="donationLoading" id="feed-empty" class="p-8 text-center rounded border border-gray-300 text-sm text-gray-600">
+            Loading...
+          </div>
+          <div v-else-if="transactions.length > 0" id="feed-list">
             <div v-for="item in transactions" :key="item.id" class="feed-item rounded border border-gray-300 px-3 pb-3 mb-4">
               <div class="title flex px-2 pt-3 items-center">
                 <h4 class="font-semibold">
@@ -31,7 +34,7 @@
             </div>
           </div>
           <div v-else id="feed-empty" class="p-8 text-center rounded border border-gray-300 text-sm text-gray-600">
-            Belum ada dukungan yang masuk
+            Belum ada dukungan yang masuk 😭
           </div>
         </div>
         <div id="overview" class="w-5/12 ml-2">
@@ -40,7 +43,7 @@
           </h3>
           <div class=" border border-gray-300 rounded flex flex-col py-4">
             <div class="balance flex items-center justify-center py-4 font-bold text-5xl text-green-400">
-              Rp 1.000.000
+              Rp. {{ balance.toLocaleString() }}
             </div>
             <div class="withdraw flex justify-end mx-4">
               <nuxt-link to="/dashboard/withdraw" class="text-green-400 font-bold text-lg border border-transparent rounded px-3 hover:border-green-300">
@@ -79,6 +82,12 @@ export default {
     },
     transactions () {
       return this.$store.state.donation.transactions
+    },
+    donationLoading () {
+      return this.$store.state.donation.loading
+    },
+    balance () {
+      return this.$store.state.donation.balance
     }
   },
   mounted () {
@@ -87,6 +96,7 @@ export default {
   methods: {
     getTransaction () {
       this.$store.dispatch('donation/getTransaction')
+      this.$store.dispatch('donation/getBalance')
     }
   },
   head () {

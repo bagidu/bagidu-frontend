@@ -1,6 +1,8 @@
 export const state = () => ({
   data: null,
-  transactions: []
+  transactions: [],
+  balance: 0,
+  loading: false
 })
 
 export const mutations = {
@@ -9,13 +11,28 @@ export const mutations = {
   },
   setTransaction (state, transactions) {
     state.transactions = transactions
+  },
+  setBalance (state, balance) {
+    state.balance = balance
+  },
+  setLoading (state, loading) {
+    state.loading = loading
   }
 }
 
 export const actions = {
   getTransaction ({ commit }) {
+    commit('setLoading', true)
     this.$api.$get('/donation')
       .then(transactions => commit('setTransaction', transactions))
       .catch(err => console.log('error when fetch transaction', err))
+      .finally(() => commit('setLoading', false))
+  },
+  getBalance ({ commit }) {
+    commit('setLoading', true)
+    this.$api.$get('/donation/balance')
+      .then(balance => commit('setBalance', balance.amount))
+      .catch(err => console.log('error get balance', err))
+      .finally(() => commit('setLoading', false))
   }
 }
