@@ -15,7 +15,8 @@
   "dependencies": {
     "@nuxtjs/axios": "5.10.3",
     "nuxt": "2.12.2",
-    "qrcode": "1.4.4"
+    "qrcode": "1.4.4",
+    "timeago.js": "^4.0.2"
   },
   "devDependencies": {
     "@nuxtjs/dotenv": "1.4.1",
