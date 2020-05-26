@@ -7,23 +7,26 @@
             Dukungan
           </h3>
           <div id="feed-list">
-            <div v-for="item in 10" :key="item" class="feed-item rounded border border-gray-300 px-3 pb-3 mb-4">
-              <h4 class="px-2 pt-3 font-semibold">
-                Nama Fans
-              </h4>
+            <div v-for="item in transactions" :key="item.id" class="feed-item rounded border border-gray-300 px-3 pb-3 mb-4">
+              <div class="title flex px-2 pt-3 items-center">
+                <h4 class="font-semibold">
+                  {{ item.name }}
+                </h4>
+                <ago class="flex-grow text-right text-sm" :time="item.createdAt" />
+              </div>
               <div class="feed-meta flex justify-start text-sm px-2 py-2">
                 <div class="amount font-bold text-green-500 text-lg">
-                  Rp. 200.000
+                  Rp. {{ item.amount.toLocaleString() }}
                 </div>
-                <div class="payment-via bg-blue-200 rounded-full font-semibold text-blue-700 px-2 py-1 mx-2 text-xs font-semibold">
-                  QRIS
-                </div>
-                <div class="timestamp flex-grow text-right">
-                  2hr yang lalu
+
+                <div class="flex items-center">
+                  <div class="payment-via bg-blue-200 rounded-full font-semibold text-blue-700 px-2 py-0 mx-2 text-xs font-semibold">
+                    QRIS
+                  </div>
                 </div>
               </div>
               <div class="feed-message px-2 mt-2 text-sm">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi quisquam soluta ullam quas hic numquam, alias blanditiis magnam modi neque repellat repudiandae temporibus voluptate ducimus ipsa exercitationem vitae? Optio, iste?
+                {{ item.message ? item.message :'No Message' }}
               </div>
             </div>
           </div>
@@ -61,11 +64,26 @@
 </template>
 
 <script>
+import ago from '~/components/lib/ago'
 export default {
   layout: 'dashboard',
+  components: {
+    ago
+  },
   computed: {
     user () {
       return this.$store.state.user.profile
+    },
+    transactions () {
+      return this.$store.state.donation.transactions
+    }
+  },
+  mounted () {
+    this.getTransaction()
+  },
+  methods: {
+    getTransaction () {
+      this.$store.dispatch('donation/getTransaction')
     }
   },
   head () {
