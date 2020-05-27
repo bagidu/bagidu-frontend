@@ -56,7 +56,7 @@ export default {
 
       setTimeout(() => {
         this.showAlert()
-      }, 1000)
+      }, 5000)
       // this.showAlert()
     },
     showAlert () {
