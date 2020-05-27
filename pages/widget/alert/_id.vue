@@ -28,7 +28,7 @@ export default {
     }
   },
   mounted () {
-    server = io(process.env.WS_URL || 'ws.bagidu.id')
+    server = io(process.env.WS_URL || 'http://ws.bagidu.id')
     server.on(`alert:${this.$route.params.id}`, (alert) => {
       console.log(`incoming alert:${this.$route.params.id}`, alert)
       this.onReceiveAlert(alert)
