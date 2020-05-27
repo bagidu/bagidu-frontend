@@ -9,7 +9,8 @@
           <div v-if="donationLoading" id="feed-empty" class="p-8 text-center rounded border border-gray-300 text-sm text-gray-600">
             Loading...
           </div>
-          <div v-else-if="transactions.length > 0" id="feed-list">
+          <!-- Transaction List -->
+          <div v-else-if="transactions && transactions.length > 0" id="feed-list">
             <div v-for="item in transactions" :key="item.id" class="feed-item rounded border border-gray-300 px-3 pb-3 mb-4">
               <div class="title flex px-2 pt-3 items-center">
                 <h4 class="font-semibold">
@@ -43,9 +44,9 @@
           </h3>
           <div class=" border border-gray-300 rounded flex flex-col py-4">
             <div class="balance flex items-center justify-center py-4 font-bold text-5xl text-green-400">
-              Rp. {{ balance.toLocaleString() }}
+              Rp. {{ balance ? balance.toLocaleString() : 0 }}
             </div>
-            <div class="withdraw flex justify-end mx-4">
+            <div v-if="false" class="withdraw flex justify-end mx-4">
               <nuxt-link to="/dashboard/withdraw" class="text-green-400 font-bold text-lg border border-transparent rounded px-3 hover:border-green-300">
                 Tarik Dana
               </nuxt-link>
