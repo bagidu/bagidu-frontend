@@ -9,10 +9,10 @@
           <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Labore veritatis laboriosam sint enim nisi hic laudantium facere sapiente magnam. Molestias officia eum omnis voluptates obcaecati dolorum aut laudantium, quaerat deleniti.</p>
 
           <div id="link-group" class="my-8">
-            <nuxt-link to="/signup" class="px-10 py-3 rounded border font-normal border-green-500 bg-green-500 text-white uppercase ">
+            <nuxt-link to="/register" class="px-10 py-3 rounded border font-normal border-green-500 bg-green-500 text-white uppercase ">
               Daftar
             </nuxt-link>
-            <nuxt-link to="/panduan" class="text-sm text-green-600 p-4 hover:underline">
+            <nuxt-link to="/guide" class="text-sm text-green-600 p-4 hover:underline">
               Pelajari Selengkapnya
             </nuxt-link>
           </div>
