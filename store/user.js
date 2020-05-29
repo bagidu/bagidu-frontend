@@ -32,7 +32,7 @@ export const actions = {
       const data = await this.$api.$post('/auth/token', null, {
         withCredentials: true
       })
-      console.log('getToken:data', data)
+      // console.log('getToken:data', data)
       dispatch('setToken', { token: data.access_token, expired: data.expired })
       dispatch('getUser')
     } catch (e) {
@@ -42,8 +42,10 @@ export const actions = {
   getUser ({ commit }) {
     this.$api.get('/user/me')
       .then((res) => {
-        console.log('getUser:res', res.data)
+        // console.log('getUser:res', res.data)
         commit('setProfile', res.data)
+        // Mark as authenticataed
+        localStorage.setItem('authenticated', 'ok')
       })
       .catch((err) => {
         console.log('error get user', err)
@@ -65,6 +67,10 @@ export const actions = {
         // eslint-disable-next-line camelcase
         const { access_token, expired } = resp.data
         dispatch('setToken', { token: access_token, expired })
+
+        // Mark as authenticataed
+        localStorage.setItem('authenticated', 'ok')
+
         this.$router.replace('/dashboard')
       })
       .catch((err) => {
