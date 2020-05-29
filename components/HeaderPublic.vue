@@ -7,7 +7,7 @@
         </nuxt-link>
       </div>
       <div class="spacer flex-grow" />
-      <div id="navbar-links">
+      <div v-if="!authenticated" id="navbar-links">
         <nuxt-link to="/login" class="px-4 py-2 text-gray-800 uppercase text-sm font-semibold">
           Login
         </nuxt-link>
@@ -15,6 +15,26 @@
           Daftar
         </nuxt-link>
       </div>
+      <div v-else id="navbar-authenticated">
+        <nuxt-link to="/dashboard" class="px-4 py-2 rounded border border-green-500 bg-green-500 text-white uppercase text-sm">
+          Dashboard
+        </nuxt-link>
+      </div>
     </div>
   </header>
 </template>
+
+<script>
+export default {
+  data () {
+    return {
+      authenticated: false
+    }
+  },
+  mounted () {
+    if (localStorage.getItem('authenticated') === 'ok') {
+      this.authenticated = true
+    }
+  }
+}
+</script>

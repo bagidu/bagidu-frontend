@@ -94,6 +94,11 @@ export default {
       }
     }
   },
+  beforeMount () {
+    if (localStorage.getItem('authenticated') === 'ok') {
+      return this.$router.replace('/dashboard')
+    }
+  },
   mounted () {
     // const user = this.$store.state.user
 

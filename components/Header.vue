@@ -7,16 +7,28 @@
         </nuxt-link>
       </div>
       <div class="spacer flex-grow" />
-      <div id="navbar-links">
+      <div id="navbar-links" class="flex items-center">
         <nuxt-link to="/feedback" class="text-gray-600 mr-2 border border-gray-400 rounded px-3 py-1 text-sm">
           Feedback
         </nuxt-link>
         <nuxt-link to="/guide" class="text-gray-600 text-sm">
           Panduan
         </nuxt-link>
-        <nuxt-link v-if="user" to="/dashboard" class="pl-4 py-2 text-gray-700 capitalize text-sm font-semibold">
-          {{ user.name }}
-        </nuxt-link>
+        <div id="profile" class="flex items-center cursor-pointer">
+          <div
+            id="avatar"
+            class="ml-4 h-8 w-8 rounded-full text-center font-bold uppercase text-white flex items-center justify-center"
+            :class="{'bg-green-400':user && user.name, 'bg-gray-200': !user}"
+          >
+            {{ user && user.name ? user.name[0]:'' }}
+          </div>
+          <div v-if="user" to="/dashboard" class="pl-2 py-2 text-gray-700 capitalize text-sm font-semibold">
+            {{ user.name }}
+          </div>
+          <div v-else id="user-loading" velse class="py-2 pl-2 bg-gray-200 rounded-sm w-20 ml-2">
+            <!-- Loading -->
+          </div>
+        </div>
       </div>
     </div>
     <div id="top-menu" class="w-10/12 m-auto py-3 text-gray-700">

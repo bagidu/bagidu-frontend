@@ -7,6 +7,8 @@ export default function ({ $axios, redirect }, inject) {
 
   api.onResponseError((error) => {
     if (error.response.status === 401) {
+      // Mark as unauthenticataed
+      localStorage.removeItem('authenticated')
       redirect('/login')
     }
   })
