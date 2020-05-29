@@ -24,6 +24,7 @@
             name="amount"
             min="1500"
             max="2000000"
+            step="1000"
             class="flex-grow w-full rounded-r outline-none  text-3xl font-bold"
           >
         </div>
@@ -50,7 +51,8 @@
           </div>
         </div>
       </div>
-      <div id="name" class="px-4 pb-4">
+      <div id="name" class="px-4 pb-2">
+        <label for="name" class="text-sm">Nama</label>
         <input
           id="name"
           v-model="name"
@@ -68,7 +70,8 @@
         </div>
       </div>
       <!-- Message -->
-      <div id="message" class="px-4 pb-4">
+      <div id="message" class="px-4 pb-2">
+        <label for="message" class="text-sm">Pesan (Opsional)</label>
         <textarea
           v-model="message"
           placeholder="Pesan kamu"
@@ -76,6 +79,12 @@
           rows="2"
         />
       </div>
+      <!-- Payment Method -->
+      <div id="payments" class="px-4 pb-4">
+        <label for="Payment" class="text-sm">Metode Pembayaran</label>
+        <PaymentMethod class="" />
+      </div>
+
       <!-- Button -->
       <div id="button-container" class="px-4">
         <button
@@ -91,11 +100,14 @@
 </template>
 
 <script>
-/* eslint-disable no-console */
+import PaymentMethod from '~/components/donations/PaymentMethod'
 export default {
+  components: {
+    PaymentMethod
+  },
   data () {
     return {
-      amount: 0,
+      amount: 5000,
       name: '',
       message: '',
       amountPreset: [
