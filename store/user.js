@@ -93,5 +93,17 @@ export const actions = {
           commit('setErrors', e.response.data.message)
         }
       })
+  },
+  logout () {
+    this.$api.$post('/auth/logout', null,
+      {
+        withCredentials: true
+      }
+    )
+      .then(() => {
+        localStorage.removeItem('authenticated')
+        this.$router.replace('/')
+      })
+      .catch(err => console.log('error logout', err))
   }
 }

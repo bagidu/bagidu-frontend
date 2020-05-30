@@ -14,7 +14,11 @@
         <nuxt-link to="/guide" class="text-gray-600 text-sm">
           Panduan
         </nuxt-link>
-        <div id="profile" class="flex items-center cursor-pointer">
+        <div
+          id="profile"
+          class="flex items-center cursor-pointer relative select-none"
+          @click="onProfileOpen"
+        >
           <div
             id="avatar"
             class="ml-4 h-8 w-8 rounded-full text-center font-bold uppercase text-white flex items-center justify-center"
@@ -27,6 +31,25 @@
           </div>
           <div v-else id="user-loading" velse class="py-2 pl-2 bg-gray-200 rounded-sm w-20 ml-2">
             <!-- Loading -->
+          </div>
+          <!-- Profile Options -->
+          <div
+            v-if="profileOpen"
+            id="profile-options"
+            class="absolute bg-white shadow border border-gray-300 py-2 rounded text-gray-700"
+            style="top: 45px; right:0; width: 170px;"
+          >
+            <ul class="text-sm font-semibold">
+              <li class="px-3 py-2 hover:bg-gray-200">
+                Pengautran Akun
+              </li>
+              <li
+                class="px-3 py-2 hover:bg-gray-200"
+                @click="onLogout"
+              >
+                Logout
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -56,10 +79,26 @@
 
 <script>
 export default {
+  data () {
+    return {
+      profileOpen: false
+    }
+  },
   computed: {
     user () {
       const user = this.$store.state.user
       return user ? user.profile : null
+    }
+  },
+  methods: {
+    onProfileOpen () {
+      if (!this.user) {
+        return false
+      }
+      this.profileOpen = !this.profileOpen
+    },
+    onLogout () {
+      this.$store.dispatch('user/logout')
     }
   }
 }
