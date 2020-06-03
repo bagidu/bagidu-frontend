@@ -16,7 +16,7 @@
         <label for="link-profile" class="text-xs">URL Unik untuk digunakan pada aplikasi OBS</label>
         <div id="link-profile" class="rounded border border-gray-300 flex ">
           <div class="flex-grow px-3 py-1 select-all">
-            {{ `https://bagidu.id/widget/alert/aaaaabbbbbbcccccddddddddddeeeeee` }}
+            {{ `https://bagidu.id/widget/alert/${user.id}` }}
           </div>
           <div id="profile-copy" class="text-sm bg-gray-200 px-2 py-1 hover:bg-gray-300 cursor-pointer">
             Copy
@@ -24,7 +24,7 @@
           <a
             id="profile-copy"
             target="_blank"
-            :href="`https://bagidu.id/widget/alert/aaaaabbbbbbcccccddddddddddeeeeee`"
+            :href="`https://bagidu.id/widget/alert/${user.id}`"
             class="text-sm bg-gray-200 px-2 py-1 hover:bg-gray-300 cursor-pointer border-l border-gray-400"
           >
             Open
@@ -52,6 +52,11 @@ export default {
   layout: 'dashboard',
   components: {
     Alert
+  },
+  computed: {
+    user () {
+      return this.$store.state.user.profile
+    }
   },
   head () {
     return {
