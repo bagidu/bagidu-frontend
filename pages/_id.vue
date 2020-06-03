@@ -110,6 +110,7 @@ export default {
       amount: 5000,
       name: '',
       message: '',
+      payment_method: 'QRIS',
       amountPreset: [
         {
           name: '5K',
@@ -182,7 +183,8 @@ export default {
       this.$api.post(`/donation/${this.username}`, {
         name: this.name,
         amount: parseInt(this.amount),
-        message: this.message
+        message: this.message,
+        payment_method: this.payment_method
       }).then((res) => {
         if (res.status === 201) {
           const data = res.data
