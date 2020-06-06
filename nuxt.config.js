@@ -49,13 +49,27 @@ export default {
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/apollo'
   ],
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+  },
+
+  // Apollo module config
+  apollo: {
+    clientConfigs: {
+      // default: {
+      //   httpEndpoint: (process.env.API_URL || 'https://api.bagidu.id') + '/graphql',
+      //   httpLinkOptions: {
+      //     credentials: 'omit'
+      //   }
+      // }
+      default: '~/plugins/apollo.js'
+    }
   },
   /*
   ** Build configuration

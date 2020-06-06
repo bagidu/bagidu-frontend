@@ -1,4 +1,6 @@
 /* eslint-disable no-console */
+import gql from 'graphql-tag'
+
 export const state = () => ({
   profile: null,
   token: null,
@@ -27,16 +29,48 @@ export const actions = {
     // Set Access Token To Axios
     this.$api.setToken(token, 'Bearer')
   },
-  async getToken ({ dispatch }) {
+  async getToken ({ dispatch, commit }) {
     try {
-      const data = await this.$api.$post('/auth/token', null, {
-        withCredentials: true
+      // const data = await this.$api.$post('/auth/token', null, {
+      //   withCredentials: true
+      // })
+      // // console.log('getToken:data', data)
+      // dispatch('setToken', { token: data.access_token, expired: data.expired })
+      // dispatch('getUser')
+      console.log('apolo', this.app)
+      const client = this.app.apolloProvider.defaultClient
+      const result = await client.query({
+        query: gql`query{
+        login:token {
+          access_token
+          expired
+          user {
+            id
+            name
+            email
+            username
+          }
+        }
+      }
+      `,
+        context: {
+          credentials: 'include'
+        }
       })
-      // console.log('getToken:data', data)
-      dispatch('setToken', { token: data.access_token, expired: data.expired })
-      dispatch('getUser')
+
+      const token = result.data.login
+      const user = token.user
+
+      dispatch('setToken', { token: token.access_token, expired: token.expired })
+      commit('setProfile', user)
+
+      localStorage.setItem('authenticated', 'ok')
+
+      console.log('apollo result getToken', result.data)
     } catch (e) {
-      // console.log('error get token', e)
+      console.log('error get token', e)
+      localStorage.removeItem('authenticated')
+      // this.$router.replace('/')
     }
   },
   getUser ({ commit }) {
