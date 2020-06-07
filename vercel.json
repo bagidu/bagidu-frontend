@@ -10,5 +10,11 @@
   "env": {
     "API_URL": "@api-url",
     "WS_URL": "@ws-url"
+  },
+  "build": {
+    "env": {
+      "API_URL": "@api-url",
+      "WS_URL": "@ws-url"
+    }
   }
 }
