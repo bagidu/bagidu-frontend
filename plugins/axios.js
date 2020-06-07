@@ -3,7 +3,7 @@ export default function ({ $axios, redirect }, inject) {
   const api = $axios.create({
   })
 
-  api.setBaseURL(process.env.API_URL || 'https://api.bagidu.id')
+  api.setBaseURL(process.env.API_URL || 'https://gql.bagidu.id')
 
   api.onResponseError((error) => {
     if (error.response.status === 401) {
