@@ -8,7 +8,7 @@
     }
   ],
   "env": {
-    "API_URL": "@API_URL",
-    "WS_URL": "@WS_URL"
+    "API_URL": "@api-url",
+    "WS_URL": "@ws-url"
   }
 }
