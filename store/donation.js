@@ -24,7 +24,7 @@ export const mutations = {
 
 export const actions = {
   getTransaction ({ commit, rootState }) {
-    const token = rootState.user.token
+    // const token = rootState.user.token
     commit('setLoading', true)
     // this.$api.$get('/donation')
     //   .then(transactions => commit('setTransaction', transactions))
@@ -46,12 +46,12 @@ export const actions = {
           createdAt
         }
       }
-      `,
-      context: {
-        headers: {
-          authorization: `Bearer ${token}`
-        }
-      }
+      `
+      // context: {
+      //   headers: {
+      //     authorization: `Bearer ${token}`
+      //   }
+      // }
     }).then((result) => {
       commit('setTransaction', result.data.donations)
       commit('setBalance', result.data.balance.amount)

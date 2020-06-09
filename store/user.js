@@ -28,6 +28,7 @@ export const actions = {
 
     // Set Access Token To Axios
     this.$api.setToken(token, 'Bearer')
+    this.app.$apolloHelpers.onLogin(token)
   },
   async getToken ({ dispatch, commit }) {
     try {
@@ -37,7 +38,7 @@ export const actions = {
       // // console.log('getToken:data', data)
       // dispatch('setToken', { token: data.access_token, expired: data.expired })
       // dispatch('getUser')
-      console.log('apolo', this.app)
+      // console.log('apolo', this.app)
       const client = this.app.apolloProvider.defaultClient
       const result = await client.query({
         query: gql`query{
