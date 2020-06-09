@@ -99,15 +99,6 @@ export default {
       return this.$router.replace('/dashboard')
     }
   },
-  mounted () {
-    // const user = this.$store.state.user
-
-    // if (user && user.token && !user.profile) {
-    //   this.$store.dispatch('user/getUser')
-    // } else if (user && !user.token) {
-    //   this.$store.dispatch('user/getToken')
-    // }
-  },
   methods: {
     onSubmit () {
       // Validate

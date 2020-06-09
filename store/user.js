@@ -93,19 +93,34 @@ export const actions = {
   login ({ dispatch, commit }, { username, password }) {
     commit('setErrors', [])
     // Send Request
-    this.$api.post('/auth/login',
-      {
+    const client = this.app.apolloProvider.defaultClient
+    client.query({
+      query: gql`query ($username: String!, $password: String!){
+        login(username:$username, password:$password) {
+          access_token
+          expired
+          user {
+            id
+            name
+            email
+            username
+          }
+        }
+      }
+      `,
+      variables: {
         username,
         password
       },
-      {
-        withCredentials: true
+      context: {
+        credentials: 'include'
       }
-    )
+    })
       .then((resp) => {
         // eslint-disable-next-line camelcase
-        const { access_token, expired } = resp.data
+        const { access_token, expired, user } = resp.data.login
         dispatch('setToken', { token: access_token, expired })
+        commit('setProfile', user)
 
         // Mark as authenticataed
         localStorage.setItem('authenticated', 'ok')
@@ -120,18 +135,35 @@ export const actions = {
   },
   signup ({ dispatch, commit }, data) {
     commit('setErrors', [])
-    this.$api.$post('/user', data)
-      .then((res) => {
-        commit('setProfile', res)
-        dispatch('setToken', { token: res.access_token, expired: res.expired })
-        this.$router.replace('/dashboard')
-      })
-      .catch((e) => {
-        console.log('error signup', e.response)
-        if (e.response && e.response.data) {
-          commit('setErrors', e.response.data.message)
+    const client = this.app.apolloProvider.defaultClient
+    client.mutate({
+      mutation: gql`mutation ($data: RegisterInput!) {
+        user: register(data: $data) {
+          id
+          username
+          name
+          email
         }
-      })
+      }
+      `,
+      variables: {
+        data
+      }
+    }).then((res) => {
+      commit('setProfile', res.data.user)
+      dispatch('login', { username: data.username, password: data.password })
+    }).catch((e) => {
+      console.log('error signup', JSON.stringify(e))
+      if (e.graphQLErrors) {
+        e.graphQLErrors.forEach((err) => {
+          console.log(err)
+          const ext = err.extensions
+          if (ext && ext.exception.status === 400) {
+            commit('setErrors', ext.exception.response.message)
+          }
+        })
+      }
+    })
   },
   logout ({ dispatch }) {
     this.$api.$post('/auth/logout', null,
