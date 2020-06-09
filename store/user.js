@@ -166,11 +166,16 @@ export const actions = {
     })
   },
   logout ({ dispatch }) {
-    this.$api.$post('/auth/logout', null,
-      {
-        withCredentials: true
+    const client = this.app.apolloProvider.defaultClient
+    client.mutate({
+      mutation: gql`mutation {
+        logout
       }
-    )
+      `,
+      context: {
+        credentials: 'include'
+      }
+    })
       .then(() => {
         localStorage.removeItem('authenticated')
         dispatch('setToken', { token: null })
