@@ -32,13 +32,6 @@ export const actions = {
   },
   async getToken ({ dispatch, commit }) {
     try {
-      // const data = await this.$api.$post('/auth/token', null, {
-      //   withCredentials: true
-      // })
-      // // console.log('getToken:data', data)
-      // dispatch('setToken', { token: data.access_token, expired: data.expired })
-      // dispatch('getUser')
-      // console.log('apolo', this.app)
       const client = this.app.apolloProvider.defaultClient
       const result = await client.query({
         query: gql`query{
@@ -69,16 +62,27 @@ export const actions = {
 
       console.log('apollo result getToken', result.data)
     } catch (e) {
-      console.log('error get token', e)
+      // console.log('error get token', e)
       localStorage.removeItem('authenticated')
       // this.$router.replace('/')
     }
   },
   getUser ({ commit }) {
-    this.$api.get('/user/me')
+    const client = this.app.apolloProvider.defaultClient
+    client.query({
+      query: gql`query{
+        user:me {
+          id
+          name
+          email
+          username
+        }
+      }
+      `
+    })
       .then((res) => {
         // console.log('getUser:res', res.data)
-        commit('setProfile', res.data)
+        commit('setProfile', res.data.user)
         // Mark as authenticataed
         localStorage.setItem('authenticated', 'ok')
       })
@@ -129,7 +133,7 @@ export const actions = {
         }
       })
   },
-  logout () {
+  logout ({ dispatch }) {
     this.$api.$post('/auth/logout', null,
       {
         withCredentials: true
@@ -137,6 +141,7 @@ export const actions = {
     )
       .then(() => {
         localStorage.removeItem('authenticated')
+        dispatch('setToken', { token: null })
         this.$router.replace('/')
       })
       .catch(err => console.log('error logout', err))
