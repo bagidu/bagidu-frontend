@@ -97,7 +97,6 @@ export default {
   methods: {
     getTransaction () {
       this.$store.dispatch('donation/getTransaction')
-      // this.$store.dispatch('donation/getBalance')
     }
   },
   head () {
