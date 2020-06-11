@@ -100,6 +100,7 @@
 </template>
 
 <script>
+import gql from 'graphql-tag'
 import PaymentMethod from '~/components/donations/PaymentMethod'
 export default {
   components: {
@@ -180,14 +181,31 @@ export default {
       }
 
       this.loading = true
-      this.$api.post(`/donation/${this.username}`, {
-        name: this.name,
-        amount: parseInt(this.amount),
-        message: this.message,
-        payment_method: this.payment_method
+
+      // const client = app.apolloProvider.defaultClient
+
+      this.$apollo.mutate({
+        mutation: gql`mutation donate ($username:String!,$donation:DonationInput!){
+          donation: makeDonation(donation:$donation,username:$username) {
+            id
+            amount
+            message
+            payment_method
+            qr
+          }
+        }`,
+        variables: {
+          username: this.username,
+          donation: {
+            name: this.name,
+            amount: parseInt(this.amount),
+            message: this.message,
+            payment_method: this.payment_method
+          }
+        }
       }).then((res) => {
-        if (res.status === 201) {
-          const data = res.data
+        if (res.data) {
+          const data = res.data.donation
           if (data.id) {
             this.$router.push(`/pay/${data.id}`)
             this.$store.commit('donation/set', data)
@@ -195,13 +213,11 @@ export default {
             console.err('server not respond with id')
           }
         }
+      }).catch((err) => {
+        console.log('error when make donation', err)
+      }).finally(() => {
+        this.loading = false
       })
-        .catch((err) => {
-          console.log('error when make donation', err)
-        })
-        .finally(() => {
-          this.loading = false
-        })
     },
     onSetAmount (amount) {
       this.amount = amount
@@ -209,9 +225,20 @@ export default {
   },
   async validate ({ params, app }) {
     try {
-      const resp = await app.$api.get(`/user/${params.id}`)
-      return resp.status === 200
-    } catch {
+      const client = app.apolloProvider.defaultClient
+      await client.query({
+        query: gql`query user($id: String!) {
+          user(id:$id) {
+            id
+          }
+        }
+        `,
+        variables: {
+          id: params.id
+        }
+      })
+      return true
+    } catch (e) {
       return false
     }
   },
