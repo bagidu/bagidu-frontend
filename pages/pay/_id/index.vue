@@ -21,6 +21,7 @@
 /* eslint-disable no-console */
 // import QRCode from '@chenfengyuan/vue-qrcode'
 import QR from 'qrcode/build/qrcode'
+import gql from 'graphql-tag'
 
 let checkInterval = null
 export default {
@@ -77,15 +78,31 @@ export default {
         this.$router.replace(`/pay/${this.$route.params.id}/success`)
       } else {
         if (checkInterval) {
-          // console.log('already checking...')
           return false
         }
         checkInterval = setInterval(async () => {
           try {
-            const resp = await this.$api.get(`/donation/${this.$route.params.id}`)
-            this.$store.commit('donation/set', resp.data)
-          } catch {
-            console.log('error get payment status')
+            const resp = await this.$apollo.query({
+              query: gql`query($id:String!){
+                donation(id:$id) {
+                  id
+                  name
+                  amount
+                  qr
+                  message
+                  status
+                }
+              }
+              `,
+              variables: {
+                id: this.$route.params.id
+              },
+              fetchPolicy: 'no-cache'
+            })
+            console.log('interval result', resp.data.donation)
+            this.$store.commit('donation/set', resp.data.donation)
+          } catch (e) {
+            console.log('error get payment status', e)
           }
         }, 5000)
       }
