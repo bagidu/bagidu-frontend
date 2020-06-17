@@ -109,9 +109,27 @@ export default {
     }
   },
   async validate ({ params, app, store }) {
-    const resp = await app.$api.get(`/donation/${params.id}`)
-    store.commit('donation/set', resp.data)
-    return resp.status === 200
+    const client = app.apolloProvider.defaultClient
+    const resp = await client.query({
+      query: gql`query($id:String!){
+                donation(id:$id) {
+                  id
+                  name
+                  amount
+                  qr
+                  message
+                  status
+                }
+              }
+              `,
+      variables: {
+        id: params.id
+      },
+      fetchPolicy: 'no-cache'
+    })
+    // console.log('validate', resp.data.donation)
+    store.commit('donation/set', resp.data.donation)
+    return true
   }
 }
 </script>
