@@ -15,7 +15,7 @@
   "dependencies": {
     "@nuxtjs/apollo": "4.0.1-rc.1",
     "@nuxtjs/axios": "5.11.0",
-    "graphql-tag": "2.10.3",
+    "graphql-tag": "2.10.4",
     "nuxt": "2.13.3",
     "qrcode": "1.4.4",
     "socket.io-client": "2.3.0",
