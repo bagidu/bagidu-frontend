@@ -30,10 +30,10 @@
     "@vue/eslint-config-standard": "5.1.2",
     "@vue/test-utils": "1.0.3",
     "babel-eslint": "10.1.0",
-    "babel-jest": "26.1.0",
+    "babel-jest": "26.2.1",
     "eslint": "7.5.0",
     "eslint-plugin-nuxt": "1.0.0",
-    "jest": "26.1.0",
+    "jest": "26.2.1",
     "stylelint": "13.6.1",
     "vue-jest": "4.0.0-beta.4"
   }
